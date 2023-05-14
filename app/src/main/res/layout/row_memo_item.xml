@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:background="@color/darkBackgroundColor">
+
+        <TextView
+            android:id="@+id/category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_size_small"
+            android:text="일상" />
+
+        <TextView
+            android:id="@+id/memo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/category"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+
+            android:text="메모"
+            android:textColor="@color/darkTextColor"
+            android:textSize="@dimen/text_size_medium"/>
+
+        <TextView
+            android:id="@+id/regdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/memo"
+            android:textColor="@color/darkTextColor"
+            android:textSize="@dimen/text_size_small"
+            android:text="2023.05.14 8:12:20" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
