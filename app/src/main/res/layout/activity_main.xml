@@ -1,18 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:padding="@dimen/spacing_small"
+    tools:context=".MainActivity" >
 
-    <TextView
+    <Spinner
+        android:id="@+id/category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/register"
+        android:entries="@array/category" />
+
+    <EditText
+        android:id="@+id/memo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/category"
+        android:layout_toStartOf="@+id/register"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="메모 입력" />
+
+    <Button
+        android:id="@+id/register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_above="@+id/recyclerview"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="@string/button_register"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_medium"
+        android:textStyle="bold" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/memo"
+        android:layout_marginTop="0dp" />
+
+</RelativeLayout>
