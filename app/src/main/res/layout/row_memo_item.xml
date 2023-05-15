@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:background="@color/darkBackgroundColor">
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/category"
@@ -31,7 +31,7 @@
             android:layout_marginBottom="4dp"
 
             android:text="메모"
-            android:textColor="@color/darkTextColor"
+            android:textColor="@color/black"
             android:textSize="@dimen/text_size_medium"/>
 
         <TextView
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/memo"
-            android:textColor="@color/darkTextColor"
+            android:textColor="@color/black"
             android:textSize="@dimen/text_size_small"
             android:text="2023.05.14 8:12:20" />
 
