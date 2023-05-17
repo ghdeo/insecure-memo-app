@@ -31,7 +31,7 @@
         android:layout_above="@+id/recyclerview"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
         android:text="@string/button_register"
         android:textColor="@android:color/white"
         android:textSize="@dimen/text_size_medium"
