@@ -1,5 +1,6 @@
 package com.hongik.insecurememo;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethod;
+
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +20,21 @@ import android.widget.Toast;
 import com.hongik.insecurememo.adapter.MemoListAdapter;
 import com.hongik.insecurememo.item.MemoItem;
 
+import org.conscrypt.Conscrypt;
+
+import java.io.IOException;
+import java.security.Security;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.Headers;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Context context;
@@ -33,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Security.insertProviderAt(Conscrypt.newProvider(), 1);
 
         context = this;
         setView();
@@ -90,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         addMemoItem(category, memo);
+        post(memo);
 
         categorySpinner.setSelection(0);
         memoEdit.setText("");
@@ -111,5 +129,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void post(String memo) {
+        String url = "http://10.0.2.2:8080/";
+        Map params = new HashMap();
+        params.put("content", memo);
 
+        //BODY에 파라미터 추가
+        FormBody.Builder formBuilder = new FormBody.Builder();
+        formBuilder.add("content", String.valueOf(params.get("content"))); // 바디에 추가
+
+        //HTTP 객체 선언
+        OkHttpClient client = new OkHttpClient();
+        Request.Builder request = new Request.Builder();
+
+        request.addHeader("Content-Type", "application/json; charset=utf-8;"); // 헤더
+        request.post(formBuilder.build());
+        request.url(url); //httpBuilder 추가
+
+        client.newCall(request.build()).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Headers headers = request.build().headers();
+                headers.toString();
+                Log.e("", "Request failed: " + e.getMessage() + "header: " + headers.toString());
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String responseBody = response.body().string();
+                    Log.d("", "Request successful. Response: " + responseBody);
+                } else {
+                    Log.e("", "Request failed. Response code: " + response.code());
+                }
+            }
+        });
+    }
 }
