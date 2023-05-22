@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         addMemoItem(category, memo);
-        post(memo);
+        post(category, memo);
 
         categorySpinner.setSelection(0);
         memoEdit.setText("");
@@ -129,13 +129,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void post(String memo) {
-        String url = "http://10.0.2.2:8080/";
+    private void post(String category, String memo) {
+        String url = "http://10.0.2.2:5000/api/memo";
         Map params = new HashMap();
+        params.put("category", category);
         params.put("content", memo);
 
         //BODY에 파라미터 추가
         FormBody.Builder formBuilder = new FormBody.Builder();
+        formBuilder.add("category", String.valueOf(params.get("category")));
         formBuilder.add("content", String.valueOf(params.get("content"))); // 바디에 추가
 
         //HTTP 객체 선언
@@ -151,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Headers headers = request.build().headers();
                 headers.toString();
-                Log.e("", "Request failed: " + e.getMessage() + "header: " + headers.toString());
+                Log.e("", "Request failed: " + e.getMessage());
             }
 
             @Override
